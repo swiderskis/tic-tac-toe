@@ -17,7 +17,7 @@ int main() {
     int board[3][3] = {{0,0,0},{0,0,0},{0,0,0}};
     int winCondition = 0;
     int turn = 1; // Specifies if it is player 1 or player 2's turn
-    int round = 1; // Counts the number of rounds played - tic-tac-toe can never go over 9 rounds
+    int round = 1; // Counts the number of rounds played (tic-tac-toe can never go over 9 rounds)
     int posX = 0;
     int posY = 0;
     bool allowedInput = false;
@@ -29,12 +29,12 @@ int main() {
         while (allowedInput == false) {
             system("cls");
             printBoard(board);
-            printTurnText(turn);
+            printf("\nPlayer %d, input your position (in format e.g. 1 2):\n", turn);
             scanf("%d %d", &posY, &posX);
             allowedInput = checkAllowedInput(board,posX,posY);
         }
 
-        // Assigns player move to board
+        // Assigns player input to board
         switch(turn) {
         case 1:
             board[posX-1][posY-1] = 1;
@@ -101,9 +101,9 @@ bool checkAllowedInput(int board[3][3], int posX, int posY) {
 // Checks current board to see if a win condition is met
 int checkWinCondition(int board[3][3]) {
     int winCondition = 0;
-    int checkHor[3] = {0,0,0};
-    int checkVer[3] = {0,0,0};
-    int checkDiag[2] = {0,0};
+    int checkHor[3] = {0,0,0}; // Checks on horizontal rows
+    int checkVer[3] = {0,0,0}; // Checks on vertical columns
+    int checkDiag[2] = {0,0}; // Checks on diagonals
 
     for (int i = 0; i < 3; i++) {
         checkHor[i] = board[i][0] + board[i][1] + board[i][2];
@@ -124,14 +124,9 @@ int checkWinCondition(int board[3][3]) {
     checkDiag[0] = board[0][0] + board[1][1] + board[2][2];
     checkDiag[1] = board[0][2] + board[1][1] + board[2][0];
 
-    if (abs(checkDiag[0]) == 3 || abs(checkDiag[0]) == 3) {
+    if (abs(checkDiag[0]) == 3 || abs(checkDiag[1]) == 3) {
         winCondition = 1;
     }
 
     return winCondition;
-}
-
-// Prints turn text for relevant player
-void printTurnText(int turn) {
-    printf("\nPlayer %d, input your position (in format e.g. 1 2):\n", turn);
 }
